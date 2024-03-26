@@ -1,0 +1,61 @@
+<!-- 创建一个显示可选择的图表的下拉菜单 -->
+<!-- 该下拉菜单用于选择要显示的图表 -->
+<!-- 该下拉菜单的选项是从数据库中读取的 -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'admin/simpleui-x/fontawesome-free-6.2.0-web/css/all.css' %}">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/admin-lte/3.2.0/css/adminlte.min.css">
+  <script src="{% static 'js/adminlte.min.js' %}"></script>
+  <title>选择文件</title>
+</head>
+<body>
+<div>
+  <div class="content-header">
+    <h1>&nbsp&nbsp选择文件</h1>
+  </div>
+  <div class="content">
+    <blockquote class="quote-info mt-0">
+      <h5 id="tip">注意！</h5>
+      <p>请选择需要展示图表的文件名，选择后点击展示即可。</p>
+    </blockquote>
+    <div class="container-fluid">
+      <div class="col-md-12">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">RSS拟合</h3>
+          </div>
+
+          <form action="{% url 'show_charts' %}" method="POST">
+            <div class="card-body">
+              {% csrf_token %}
+              <div class="form-group">
+                <label>文件</label>
+                <select name="id" class="form-control select2" style="width: 100%;">
+                  {% for f in file_list %}
+                    <option value="{{ f.id }}">{{ f.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <button type="submit" class="btn btn-primary">显示</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% if messages %}
+<script>
+  {% for msg in messages %}
+    alert('{{ msg.message }}');
+  {% endfor %}
+</script>
+{% endif %}
+</body>

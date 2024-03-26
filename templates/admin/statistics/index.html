@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>拟合图表展示</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Theme style -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    {% load static %}
+{#    <link rel="stylesheet" href="https://adminlte.io/docs/3.2/assets/plugins/fontawesome-free/css/all.min.css">#}
+    <link rel="stylesheet" href="{% static 'admin/simpleui-x/fontawesome-free-6.2.0-web/css/all.css' %}">
+    <link rel="stylesheet" href="https://adminlte.io/docs/3.2/assets/css/adminlte.min.css">
+    <script type="text/javascript" src="https://cdn.staticfile.org/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.staticfile.org/echarts/5.4.3/echarts.min.js"></script>
+    <script type="text/javascript" src="https://cdn.staticfile.org/echarts-gl/2.0.8/echarts-gl.min.js"></script>
+    <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.4.3/dist/extension/dataTool.min.js"></script>
+</head>
+
+<body style="background-color: #f8f8f8;">
+<div class="content-header">
+    <h1>&nbsp&nbsp图表展示</h1>
+</div>
+
+<div class="content px-2 wrapper">
+ <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+          <!-- new row -->
+        <div><h4 class="text-bold text-dark mt-3">拟合结果图表</h4></div>
+        <div class="row">
+            <div id="echartsError" style="width: 600px; height: 800px;" class="col-sm-12"></div>
+        </div>
+        <div class="row">
+            <div id="echarts3D" style="width: 600px; height: 800px;" class="col-sm-12"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+<script type="text/javascript">
+    var ChartError = echarts.init(document.getElementById('echartsError'), null, { renderer: 'svg' });
+    var Chart3D = echarts.init(document.getElementById('echarts3D'), 'dark', { renderer: 'canvas' });
+    var optionError = {{ optionError|safe }};
+    var option3D = {{ option3D|safe }};
+    ChartError.setOption(optionError);
+    Chart3D.setOption(option3D);
+    window.addEventListener('resize', ChartError.resize);
+    window.addEventListener('resize', Chart3D.resize);
+</script>
+</body>
